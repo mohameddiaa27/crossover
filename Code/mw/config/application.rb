@@ -14,5 +14,6 @@ module Mw
     config.generators.assets = false
 		config.generators.helper = false
 		config.generators.template_engine = nil
+		config.middleware.delete ActionDispatch::Session::CookieStore
   end
 end

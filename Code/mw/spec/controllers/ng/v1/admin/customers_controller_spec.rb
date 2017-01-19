@@ -21,7 +21,7 @@ require 'rails_helper'
 RSpec.describe Ng::V1::Admin::CustomersController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
-  # Ng::V1::Admin::Customer. As you add validations to Ng::V1::Admin::Customer, be sure to
+  # Ng::V1::Admin::Customer. As you add validations to Customer, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
@@ -33,12 +33,12 @@ RSpec.describe Ng::V1::Admin::CustomersController, type: :controller do
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # Ng::V1::Admin::CustomersController. Be sure to keep this updated too.
+  # CustomersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe "GET #index" do
     it "assigns all ng_v1_admin_customers as @ng_v1_admin_customers" do
-      customer = Ng::V1::Admin::Customer.create! valid_attributes
+      customer = Customer.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(assigns(:ng_v1_admin_customers)).to eq([customer])
     end
@@ -46,57 +46,9 @@ RSpec.describe Ng::V1::Admin::CustomersController, type: :controller do
 
   describe "GET #show" do
     it "assigns the requested ng_v1 as @ng_v1" do
-      customer = Ng::V1::Admin::Customer.create! valid_attributes
+      customer = Customer.create! valid_attributes
       get :show, params: {id: customer.to_param}, session: valid_session
       expect(assigns(:ng_v1)).to eq(customer)
-    end
-  end
-
-  describe "GET #new" do
-    it "assigns a new ng_v1 as @ng_v1" do
-      get :new, params: {}, session: valid_session
-      expect(assigns(:ng_v1)).to be_a_new(Ng::V1::Admin::Customer)
-    end
-  end
-
-  describe "GET #edit" do
-    it "assigns the requested ng_v1 as @ng_v1" do
-      customer = Ng::V1::Admin::Customer.create! valid_attributes
-      get :edit, params: {id: customer.to_param}, session: valid_session
-      expect(assigns(:ng_v1)).to eq(customer)
-    end
-  end
-
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new Ng::V1::Admin::Customer" do
-        expect {
-          post :create, params: {ng_v1: valid_attributes}, session: valid_session
-        }.to change(Ng::V1::Admin::Customer, :count).by(1)
-      end
-
-      it "assigns a newly created ng_v1 as @ng_v1" do
-        post :create, params: {ng_v1: valid_attributes}, session: valid_session
-        expect(assigns(:ng_v1)).to be_a(Ng::V1::Admin::Customer)
-        expect(assigns(:ng_v1)).to be_persisted
-      end
-
-      it "redirects to the created ng_v1" do
-        post :create, params: {ng_v1: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Ng::V1::Admin::Customer.last)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns a newly created but unsaved ng_v1 as @ng_v1" do
-        post :create, params: {ng_v1: invalid_attributes}, session: valid_session
-        expect(assigns(:ng_v1)).to be_a_new(Ng::V1::Admin::Customer)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, params: {ng_v1: invalid_attributes}, session: valid_session
-        expect(response).to render_template("new")
-      end
     end
   end
 
@@ -107,20 +59,20 @@ RSpec.describe Ng::V1::Admin::CustomersController, type: :controller do
       }
 
       it "updates the requested ng_v1" do
-        customer = Ng::V1::Admin::Customer.create! valid_attributes
+        customer = Customer.create! valid_attributes
         put :update, params: {id: customer.to_param, ng_v1: new_attributes}, session: valid_session
         customer.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested ng_v1 as @ng_v1" do
-        customer = Ng::V1::Admin::Customer.create! valid_attributes
+        customer = Customer.create! valid_attributes
         put :update, params: {id: customer.to_param, ng_v1: valid_attributes}, session: valid_session
         expect(assigns(:ng_v1)).to eq(customer)
       end
 
       it "redirects to the ng_v1" do
-        customer = Ng::V1::Admin::Customer.create! valid_attributes
+        customer = Customer.create! valid_attributes
         put :update, params: {id: customer.to_param, ng_v1: valid_attributes}, session: valid_session
         expect(response).to redirect_to(customer)
       end
@@ -128,13 +80,13 @@ RSpec.describe Ng::V1::Admin::CustomersController, type: :controller do
 
     context "with invalid params" do
       it "assigns the ng_v1 as @ng_v1" do
-        customer = Ng::V1::Admin::Customer.create! valid_attributes
+        customer = Customer.create! valid_attributes
         put :update, params: {id: customer.to_param, ng_v1: invalid_attributes}, session: valid_session
         expect(assigns(:ng_v1)).to eq(customer)
       end
 
       it "re-renders the 'edit' template" do
-        customer = Ng::V1::Admin::Customer.create! valid_attributes
+        customer = Customer.create! valid_attributes
         put :update, params: {id: customer.to_param, ng_v1: invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
@@ -143,14 +95,14 @@ RSpec.describe Ng::V1::Admin::CustomersController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested ng_v1" do
-      customer = Ng::V1::Admin::Customer.create! valid_attributes
+      customer = Customer.create! valid_attributes
       expect {
         delete :destroy, params: {id: customer.to_param}, session: valid_session
-      }.to change(Ng::V1::Admin::Customer, :count).by(-1)
+      }.to change(Customer, :count).by(-1)
     end
 
     it "redirects to the ng_v1_admin_customers list" do
-      customer = Ng::V1::Admin::Customer.create! valid_attributes
+      customer = Customer.create! valid_attributes
       delete :destroy, params: {id: customer.to_param}, session: valid_session
       expect(response).to redirect_to(ng_v1_admin_customers_url)
     end

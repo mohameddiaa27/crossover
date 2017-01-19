@@ -10,15 +10,6 @@ class Ng::V1::Admin::AgentsController < Ng::V1::Admin::BaseController
   def show
   end
 
-  # GET /ng/v1/admin/agents/new
-  def new
-    @agent = Agent.new
-  end
-
-  # GET /ng/v1/admin/agents/1/edit
-  def edit
-  end
-
   # POST /ng/v1/admin/agents
   def create
     @agent = Agent.new(agent_params)

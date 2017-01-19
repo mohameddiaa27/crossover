@@ -10,35 +10,6 @@ class Ng::V1::Admin::CustomersController < Ng::V1::Admin::BaseController
   def show
   end
 
-  # GET /ng/v1/admin/customers/new
-  def new
-    @customer = Customer.new
-  end
-
-  # GET /ng/v1/admin/customers/1/edit
-  def edit
-  end
-
-  # POST /ng/v1/admin/customers
-  def create
-    @customer = Customer.new(customer_params)
-
-    if @customer.save
-      redirect_to @customer, notice: 'Customer was successfully created.'
-    else
-      render :new
-    end
-  end
-
-  # PATCH/PUT /ng/v1/admin/customers/1
-  def update
-    if @customer.update(customer_params)
-      redirect_to @customer, notice: 'Customer was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
   # DELETE /ng/v1/admin/customers/1
   def destroy
     @customer.destroy
