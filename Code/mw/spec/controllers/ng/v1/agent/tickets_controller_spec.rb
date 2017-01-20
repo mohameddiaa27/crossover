@@ -3,70 +3,49 @@ require 'rails_helper'
 
 RSpec.describe Ng::V1::Agent::TicketsController, type: :controller do
 
+  let(:agent) { FactoryGirl.create(:agent) }
+  let(:ticket) { FactoryGirl.create(:ticket) }
+  let(:another_agent) { FactoryGirl.create(:another_agent) }
+
   before do
-    @agent = Agent.create!(email: Faker::Internet.email, password: Faker::Name.unique.name, name: Faker::Name.name)
-    @customer = Customer.create!(email: Faker::Internet.email, password: Faker::Name.unique.name, name: Faker::Name.name)
-    @token = Tiddle.create_and_return_token(@agent, FakeRequest.new)
-    sign_in @agent
+    sign_in agent
   end
 
-  let(:valid_attributes) {
-    {
-      title: Faker::Lorem.sentence,
-      body: Faker::Lorem.paragraph,
-      customer: @customer
-    }
-  }
-
-  let(:new_agent) {
-    Agent.create!(email: Faker::Internet.email, password: Faker::Name.unique.name, name: Faker::Name.name)
-  }
-
-  before(:each) do
-    @ticket = Ticket.create! valid_attributes
+  before :each do
+    accept_json
   end
 
   describe 'GET #index' do
-    it 'assigns all tickets as @tickets' do
-      params = {
-        page: 1,
-        filter: 'all',
-        format: :json
-      }
-      get :index, params: params
-      expect(assigns(:tickets)).to eq([@ticket])
-    end
-
-    it 'assigns only agent tickets as @tickets' do
-      @ticket.assign!(@agent)
-      params = {
-        page: 1,
-        format: :json
-      }
-      get :index, params: params
-      expect(assigns(:tickets)).to eq([@ticket])
+    subject { Ticket.for_agent(agent).limit(10) }
+    it 'assigns all tickets as tickets' do
+      res = model_serialize(subject, [:customer])
+      get :index, params: { page: 1 }
+      expect(response).to have_http_status(:ok)
+      expect(response_body).to include_json(res)
     end
   end
 
   describe 'GET #show' do
-    it 'assigns the requested ticket as @ticket' do
-      get :show, params: { id: @ticket.to_param }
-      expect(assigns(:ticket)).to eq(@ticket)
+    it 'assigns the requested ticket as ticket' do
+      res = model_serialize(ticket, [:agent, :customer, :comments])
+      get :show, params: { id: ticket.to_param }
+      expect(response).to have_http_status(:ok)
+      expect(response_body).to include_json(res)
     end
   end
 
-  describe 'POST #assign' do
+  describe 'PUT #assign' do
+    let(:params) { { ticket_id: ticket.to_param } }
     it 'assigns the requested ticket current_agent' do
-      params = { ticket_id: @ticket.to_param }
-      post :assign, params: params
-      expect(assigns(:ticket).agent).to eq(@agent)
+      put :assign, params: params
+      expect(assigns(:ticket).agent).to eq(agent)
     end
 
     it 'fails to assign the requested ticket current_agent' do
-      @ticket.assign!(new_agent)
-      params = { ticket_id: @ticket.to_param }
-      post :assign, params: params
-      expect(assigns(:ticket).agent).to eq(new_agent)
+      ticket.assign!(another_agent)
+      put :assign, params: params
+      expect(response).to have_http_status(:bad_request)
+      expect(assigns(:ticket).agent).not_to eq(agent)
     end
   end
 end

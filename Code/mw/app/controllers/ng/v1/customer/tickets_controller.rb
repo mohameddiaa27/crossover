@@ -10,7 +10,9 @@ class Ng::V1::Customer::TicketsController < Ng::V1::Customer::BaseController
     if @ticket.save
       render json: @ticket, status: :ok
     else
-      render json: { error_message: @ticket.errors.join('') }, status: :bad_request
+      render json: {
+        error_messages: @ticket.errors
+      }, status: :bad_request
     end
   end
 
@@ -21,17 +23,17 @@ class Ng::V1::Customer::TicketsController < Ng::V1::Customer::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ticket
-      @ticket = Ticket.find_by(id: params[:id], customer_id: current_customer.id)
-    end
 
-    def set_tickets
-      @tickets = Ticket.for_customer(current_customer.id)
-    end
+  def set_ticket
+    @ticket = Ticket.find_by(id: params[:id], customer_id: current_customer.id)
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def ticket_params
-      params.fetch(:ticket, {}).permit([:title, :body])
-    end
+  def set_tickets
+    @tickets = Ticket.for_customer(current_customer.id)
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def ticket_params
+    params.fetch(:ticket, {}).permit(:title, :body)
+  end
 end

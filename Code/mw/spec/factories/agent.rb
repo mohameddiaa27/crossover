@@ -1,14 +1,13 @@
 FactoryGirl.define do
   factory :agent do
-    email 'agent@email.com'
+    email Faker::Internet.email
     password Faker::Name.unique.name
-    name 'Agent Name'
+    name Faker::Name.name
 
-    trait :random do
-	    email Faker::Internet.email
-	    password Faker::Name.unique.name
-	    name Faker::Name.name
-    end
+    trait :another_email do
+    	email Faker::Internet.email
+  	end
 
+  	factory :another_agent, traits: [:another_email]
   end
 end

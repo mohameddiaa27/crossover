@@ -18,21 +18,16 @@ class Ng::V1::Agent::TicketsController < Ng::V1::Agent::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
 
-    def set_tickets
-      if params[:filter] == 'all'
-        @tickets = Ticket.all
-      else
-        @tickets = Ticket.for_agent(current_agent.id)
-      end
-    end
+  def set_tickets
+    return @tickets = Ticket.all if params[:filter] == 'all'
+    @tickets = Ticket.for_agent(current_agent.id)
+  end
 
-    def validate_ownership
-      unless @ticket.agent == current_agent
-        render json: {
-          error_message: 'Packages should be array'
-        }, status: :not_found
-      end
-    end
+  def validate_ownership
+    return if @ticket.agent == current_agent
+    render json: {
+      error_message: 'Packages should be array'
+    }, status: :not_found
+  end
 end

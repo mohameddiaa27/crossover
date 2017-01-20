@@ -1,6 +1,6 @@
 class Ng::V1::Admin::TicketsController < Ng::V1::Admin::BaseController
 
-  #include
+  # Include
   include TicketsConcern
 
   # DELETE /ng/v1/admin/tickets/1
@@ -10,7 +10,8 @@ class Ng::V1::Admin::TicketsController < Ng::V1::Admin::BaseController
   end
 
   private
-    def set_tickets
-      @tickets = Ticket.all
-    end
+
+  def set_tickets
+    @tickets = Ticket.all
+  end
 end

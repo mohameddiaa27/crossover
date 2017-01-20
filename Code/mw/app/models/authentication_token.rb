@@ -1,5 +1,5 @@
 class AuthenticationToken < ApplicationRecord
 
-	# Associations
+  # Associations
   belongs_to :account, polymorphic: true
 end

@@ -37,13 +37,14 @@ class Ng::V1::Admin::AgentsController < Ng::V1::Admin::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_agent
-      @agent = Agent.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def agent_params
-      params.fetch(:agent, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_agent
+    @agent = Agent.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def agent_params
+    params.fetch(:agent, {})
+  end
 end

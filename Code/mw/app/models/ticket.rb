@@ -1,9 +1,9 @@
 class Ticket < ApplicationRecord
 
-	# Attributes
-	enum status: [:initiated, :assigned, :solved]
+  # Attributes
+  enum status: [:initiated, :assigned, :solved]
 
-	# Associations
+  # Associations
   belongs_to :customer
   belongs_to :agent
   has_many :comments
@@ -21,7 +21,7 @@ class Ticket < ApplicationRecord
   # Methods
   def assign!(agent)
     return false unless self.agent.nil?
-  	self.agent = agent
-  	self.assigned!
+    self.agent = agent
+    assigned!
   end
 end

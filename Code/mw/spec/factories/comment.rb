@@ -11,7 +11,7 @@ FactoryGirl.define do
       association :account, factory: :agent
     end
 
-    factory :agent_comment,   traits: [:by_agent]
+    factory :agent_comment, traits: [:by_agent]
     factory :admin_comment, traits: [:by_admin]
   end
 end

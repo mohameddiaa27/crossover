@@ -87,14 +87,13 @@ ActiveRecord::Schema.define(version: 20170117141440) do
   end
 
   create_table "tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "status"
+    t.integer  "status",                    default: 0
     t.integer  "customer_id"
     t.integer  "agent_id"
     t.text     "body",        limit: 65535
     t.string   "title"
-    t.datetime "closed_at"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
 end

@@ -1,16 +1,18 @@
+# TicketsConcern:
+# A module for warpping tickets common actions
 module TicketsConcern
   extend ActiveSupport::Concern
 
   # Filters
   included do
     before_action :set_tickets, only: [:index]
-  	before_action :set_ticket, except: [:index]
-  	before_action :validate_presence, except: [:index]
+    before_action :set_ticket, except: [:index]
+    before_action :validate_presence, except: [:index, :create]
   end
 
   # Actions
   def show
-  	render json: @ticket, include: [:agent, :customer, :comments], status: :ok
+    render json: @ticket, include: [:agent, :customer, :comments], status: :ok
   end
 
   def index
@@ -26,10 +28,9 @@ module TicketsConcern
 
   # Error Responses
   def validate_presence
-		if @ticket.nil?
-			render json: {
-	      error_message: 'Packages should be array'
-	    }, status: :not_found
-	  end
-	end
+    return unless @ticket.nil?
+    render json: {
+      error_message: 'Ticket maybe deleted'
+    }, status: :not_found
+  end
 end

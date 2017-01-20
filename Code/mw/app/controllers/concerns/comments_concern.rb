@@ -1,10 +1,12 @@
+# CommentsConcern:
+# A module for warpping comments common actions
 module CommentsConcern
   extend ActiveSupport::Concern
 
   # Filters
   included do
-  	before_action :set_comment, except: [:index]
-  	before_action :validate_presence, except: [:index]
+    before_action :set_comment, except: [:index]
+    before_action :validate_presence, except: [:index]
   end
 
   # Actions
@@ -28,12 +30,11 @@ module CommentsConcern
 
   # Error Responses
   def validate_presence
-		if @ticket.nil?
-			render json: {
-	      error_message: 'Packages should be array'
-	    }, status: :not_found
-	  end
-	end
+    return unless @ticket.nil?
+    render json: {
+      error_message: 'Comment maybe deleted'
+    }, status: :not_found
+  end
 
   def can_delete?
     @comment.account == env['warden'].user

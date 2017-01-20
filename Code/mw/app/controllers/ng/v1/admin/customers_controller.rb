@@ -17,13 +17,14 @@ class Ng::V1::Admin::CustomersController < Ng::V1::Admin::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_customer
-      @customer = Customer.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def customer_params
-      params.fetch(:customer, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_customer
+    @customer = Customer.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def customer_params
+    params.fetch(:customer, {})
+  end
 end
