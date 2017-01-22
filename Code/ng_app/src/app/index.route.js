@@ -50,6 +50,12 @@
         controller: 'CustomersController',
         controllerAs: 'customers'
       })
+      .state('new', {
+        url: '/new',
+        templateUrl: 'app/new/new.html',
+        controller: 'NewController',
+        controllerAs: 'tn'
+      })
       ;
 
     $urlRouterProvider.otherwise('/');

@@ -31,6 +31,12 @@
       };
 
       vm.addComment = function() {
+        if(!vm.newComment.body) {
+          return toasty.error({
+            title: 'Comment',
+            msg: 'is too short'
+          });
+        }
         vm.newComment.ticket_id = vm.ticket.id;
         Ticket.addComment(vm.newComment).$promise.then(function(comment) {
           if (comment.id) {

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
 
-	devise_group :user, contains: [:user, :admin, :agent]
+	devise_group :user, contains: [:customer, :admin, :agent]
 
   def pagination_dict(object)
     {

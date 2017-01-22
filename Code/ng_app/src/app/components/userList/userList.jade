@@ -15,16 +15,16 @@
         td {{user.name}}
         td {{user.email}}
         td.td-actions
-          a.btn.btn-default.btn-xs(href='javascript:;')
+          button.btn.btn-default.btn-xs
             span.glyphicon.glyphicon-pencil
             |  Edit
-          a.btn.btn-default.btn-xs(href='javascript:;')
+          button.btn.btn-default.btn-xs
             span.glyphicon.glyphicon-remove
             |  Remove
-          a.btn.btn-default.btn-xs(href='javascript:;')
+          button.btn.btn-default.btn-xs
             span.glyphicon.glyphicon-search
             |  View
-.row(ng-hide='us.index.us.users.length == 0')
+.row-fluid(ng-hide='us.index.us.users.length == 0')
   .col-md-2.col-md-offset-5
     .row-fluid
       .page-nation

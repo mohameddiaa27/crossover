@@ -39,12 +39,16 @@ angular.module('ngApp')
         });
       },
       create: function(ticket) {
-        return ticketResource().save(ticket, function() {});
+        return ticketResource().save({
+          ticket: ticket
+        }, function() {});
       },
       update: function(ticket) {
         return ticketResource().update({
           id: ticket.id
-        }, { ticket: ticket} );
+        }, {
+          ticket: ticket
+        });
       },
       destroy: function(ticket) {
         return ticketResource().delete({
@@ -56,13 +60,13 @@ angular.module('ngApp')
           comment: newComment
         });
       },
-      deleteComment: function(comment, ticket_id){
+      deleteComment: function(comment, ticket_id) {
         return commentResource(ticket_id).delete({
           id: comment.id
         });
       },
       updateAttrs: function(oldTicket, newTicket) {
-        Object.keys(newTicket).forEach(function(key){
+        Object.keys(newTicket).forEach(function(key) {
           oldTicket[key] = newTicket[key];
         });
       }

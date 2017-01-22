@@ -10,9 +10,7 @@ class Ng::V1::Customer::TicketsController < Ng::V1::Customer::BaseController
     if @ticket.save
       render json: @ticket, include: [:agent, :customer, comments: :account], status: :ok
     else
-      render json: {
-        error_messages: @ticket.errors
-      }, status: :bad_request
+      render json: @ticket.errors, status: :bad_request
     end
   end
 

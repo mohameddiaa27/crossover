@@ -19,6 +19,10 @@
 			}
 		};
 
+		var shouldRedirectToLogin = function(){
+			return !$rootScope.currentUser && $state.current.name.indexOf("_login") !== -1
+		}
+
 		ngTiddleAuthProvider.setApiRoot('http://localhost:3000');
 		ngTiddleAuthProvider.setApiResourcePath('auth');
 		ngTiddleAuthProvider.setSignInStrategy('email');
@@ -28,9 +32,10 @@
 		}
 		$rootScope.currentUser = ngTiddleSessionService.getResource();
 
-		if (!$rootScope.currentUser && $state.current.name.indexOf("_login") !== -1) {
-			$rootScope.endSession();
+		if (shouldRedirectToLogin()) {
+				$rootScope.endSession();
 		}
+
 
 		ngTiddleAuthProvider.onAuthorize = function(auth_data) {
 			$rootScope.currentUser = ngTiddleSessionService.getResource();
@@ -46,6 +51,13 @@
 		ngTiddleAuthProvider.onUnauthorized = function() {
 			$rootScope.endSession();
 		}
+
+		 $rootScope.$on('$stateChangeStart',
+		      function(event, toState, toParams, fromState, fromParams){
+		      	if(shouldRedirectToLogin()){
+		          event.preventDefault();
+		      	}
+		 });
 
 	}
 

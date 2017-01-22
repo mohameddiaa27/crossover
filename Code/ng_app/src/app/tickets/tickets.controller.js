@@ -6,7 +6,7 @@
 		.controller('TicketsController', TicketsController);
 
 	/** @ngInject */
-	function TicketsController($timeout, webDevTec, toastr, $log, Ticket) {
+	function TicketsController($timeout, webDevTec, $state, toastr, $log, Ticket) {
 		var vm = this
 		vm.filters = {
 			status: 'all'
@@ -33,6 +33,10 @@
 				vm.filters.status = 'all';
 			}
 			updateTickets();
+		}
+
+		vm.newTicket = function(){
+			$state.go('new');
 		}
 
 		updateTickets();
