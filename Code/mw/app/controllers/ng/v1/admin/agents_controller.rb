@@ -3,37 +3,32 @@ class Ng::V1::Admin::AgentsController < Ng::V1::Admin::BaseController
 
   # GET /ng/v1/admin/agents
   def index
-    @agents = Agent.all
-  end
-
-  # GET /ng/v1/admin/agents/1
-  def show
+    @agents = Agent.page(params[:page]).per(5)
+    render json: { users: @agents, meta: pagination_dict(@agents) }, status: :ok
   end
 
   # POST /ng/v1/admin/agents
   def create
     @agent = Agent.new(agent_params)
-
+    @agent.password = '123456'
     if @agent.save
-      redirect_to @agent, notice: 'Agent was successfully created.'
+      render json: @agent, status: :ok
     else
-      render :new
+      render json: {
+        error_message: 'Ticket failed to update'
+      }, status: :bad_request
     end
   end
 
   # PATCH/PUT /ng/v1/admin/agents/1
   def update
     if @agent.update(agent_params)
-      redirect_to @agent, notice: 'Agent was successfully updated.'
+      render json: @agent, status: :ok
     else
-      render :edit
+      render json: {
+        error_message: 'Ticket failed to update'
+      }, status: :bad_request
     end
-  end
-
-  # DELETE /ng/v1/admin/agents/1
-  def destroy
-    @agent.destroy
-    redirect_to agents_url, notice: 'Agent was successfully destroyed.'
   end
 
   private
@@ -45,6 +40,6 @@ class Ng::V1::Admin::AgentsController < Ng::V1::Admin::BaseController
 
   # Only allow a trusted parameter "white list" through.
   def agent_params
-    params.fetch(:agent, {})
+    params.fetch(:agent, {}).permit(:name, :email)
   end
 end

@@ -6,14 +6,18 @@
     .controller('SessionsController', SessionsController);
 
   /** @ngInject */
-  function SessionsController($scope, $log, $state, ngTiddleAuthService, ngTiddleAuthProvider) {
+  function SessionsController($scope, $log, $state, ngTiddleAuthService, ngTiddleAuthProvider, $rootScope) {
     var vm = this
-
-    vm.handleSignIn = function(loginForm){
+    vm.modelName = $state.current.name.replace("_login", "");
+    vm.handleSignIn = function(loginForm) {
       ngTiddleAuthService.sign_in_params = {}
+      $rootScope.currentUser = null;
       ngTiddleAuthService.signOut();
-      ngTiddleAuthProvider.setModelName($state.current.name.replace("_login", ""));
-      ngTiddleAuthService.signIn({ email: loginForm.email, password: loginForm.password} );
+      ngTiddleAuthProvider.setModelName(vm.modelName);
+      ngTiddleAuthService.signIn({
+        email: loginForm.email,
+        password: loginForm.password
+      });
     }
   }
 })();

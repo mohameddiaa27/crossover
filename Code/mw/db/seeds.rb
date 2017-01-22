@@ -7,11 +7,29 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-ad = Admin.create(name: 'admin1', email: 'admin@app.com', password: '123456')
-ag = Agent.create(name: 'agent1', email: 'agent@app.com', password: '123456')
-Agent.create(name: 'agent2', email: 'agent2@app.com', password: '123456')
-c  = Customer.create(name: 'customer1', email: 'customer@app.com', password: '123456')
-t1 = Ticket.create(title: 'Test Title', body: 'Test Body .........!!', customer: c)
-t2 = Ticket.create(title: 'Test Title', body: 'Test Body .........!!', customer: c)
-t2.assign!(ag)
+ad = Admin.create(name: Faker::Name.name, email: 'admin@app.com', password: '123456')
+ag = Agent.create(name: Faker::Name.name, email: 'agent@app.com', password: '123456')
+Agent.create(name: Faker::Name.name, email: 'agent2@app.com', password: '123456')
+c  = Customer.create(name: Faker::Name.name, email: 'customer@app.com', password: '123456')
+t1 = Ticket.create(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph, customer: c)
+t2 = Ticket.create(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph, customer: c)
 Customer.create(name: 'customer2', email: 'customer2@app.com', password: '123456')
+
+20.times.each do
+	t1.comments.create(body: Faker::Lorem.sentence, account: c)
+end
+
+20.times do
+	Ticket.create(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph, customer: c)
+end
+
+ts = []
+20.times do
+	ts << Ticket.create(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph, customer: c)
+end
+
+ts.each do |t|
+	t.agent = ag
+	t.status = "assigned"
+	t.save!
+end

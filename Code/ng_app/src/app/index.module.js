@@ -1,7 +1,20 @@
 (function() {
-  'use strict';
+	'use strict';
 
-  angular
-    .module('ngApp', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'ui.bootstrap', 'toastr', 'ng-tiddle']);
+	angular
+		.module('ngApp', [
+			'ngAnimate',
+			'ngCookies',
+			'ngTouch',
+			'ngSanitize',
+			'ngMessages',
+			'ngAria',
+			'ngResource',
+			'ui.router',
+			'ui.bootstrap',
+			'toastr',
+			'ng-tiddle',
+			'angular-toasty'
+		]);
 
 })();

@@ -6,4 +6,5 @@ class Agent < ApplicationRecord
 
   has_many :authentication_tokens, as: :account
   has_many :comments, as: :account
+  has_many :tickets
 end

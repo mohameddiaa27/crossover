@@ -1,0 +1,33 @@
+.chatContainer
+  .actions
+    .action
+      button.btn.btn-primary(ng-if='ts.ticket.status == "initiated" && $root.currentUser.type == "agent"', ng-click='ts.updateStatus("assigned")') Assign
+      button.btn.btn-success(ng-if='ts.ticket.status == "assigned" && ($root.currentUser.type != "agent" || $root.currentUser.id == ts.ticket.id)', ng-click='ts.updateStatus("solved")') Solve
+      button.btn.btn-danger(nd-if='$root.currentUser.type != "agent"', ng-click='ts.delete()') Delete
+  .chatTitleContainer Comments
+  .chatHistoryContainer
+    ul.formComments
+      li.commentstep-1(ng-repeat='comment in ts.ticket.comments')
+        table.form-comments-table
+          tr
+            td
+              .comment-timestamp {{comment.created_at | date:"h:mma MM/dd/yyyy"}}
+            td
+              .comment-user {{comment.account.name}}
+            td
+              .comment-avatar
+                img(src='')
+            td
+              .comment.comment-step1
+                | {{comment.body}}
+            td(ng-if='$root.currentUser.type == "admin" || (comment.account.id == $root.currentUser.id && comment.account.type == $root.currentUser.type)')
+              .comment-action
+                button.btn.btn-danger(ng-click='ts.deleteComment(comment)')
+                  .glyphicon.glyphicon-remove
+  .input-group.input-group-sm.chatMessageControls
+    span#sizing-addon3.input-group-addon Comment
+    input.form-control(type='text', placeholder='Type your comment here..', ng-model='ts.newComment.body', aria-describedby='sizing-addon3')
+    span.input-group-btn
+      button#sendMessageButton.btn.btn-primary(type='button', ng-click='ts.addComment()')
+        i.fa.fa-send
+        | Send

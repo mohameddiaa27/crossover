@@ -5,19 +5,30 @@ module CommentsConcern
 
   # Filters
   included do
-    before_action :set_comment, except: [:index]
-    before_action :validate_presence, except: [:index]
+    before_action :set_comment, except: [:index, :create]
   end
 
   # Actions
-  def index
-    @comments.includes(:account).page(params[:page]).per(10)
-    render json: @tickets, include: [:account], status: :ok
+  # def index
+  #   @comments.includes(:account).page(params[:page]).per(10)
+  #   render json: @tickets, include: [:account], status: :ok
+  # end
+
+  def create
+    @comment           = Comment.new(comment_params)
+    @comment.account   = current_user
+    if @comment.save
+      render json: @comment, include: :account, status: :ok
+    else
+      render json: {
+        error_message: 'Comment can not be created !!'
+      }, status: :bad_request
+    end
   end
 
   def destroy
     if can_delete?
-      @comment.destroy
+      p @comment.destroy!
       render json: @comment, status: :ok
     else
       render json: {
@@ -28,15 +39,20 @@ module CommentsConcern
 
   private
 
-  # Error Responses
-  def validate_presence
-    return unless @ticket.nil?
-    render json: {
-      error_message: 'Comment maybe deleted'
-    }, status: :not_found
+  def set_comment
+    @comment = Comment.find_by(id: params[:id])
+    if @comment.nil?
+      render json: {
+        error_message: 'Comment not found'
+      }, status: :not_found
+    end
   end
 
   def can_delete?
-    @comment.account == env['warden'].user
+    @comment.account == current_user
+  end
+
+  def comment_params
+    params.fetch(:comment, {}).permit(:body, :ticket_id)
   end
 end

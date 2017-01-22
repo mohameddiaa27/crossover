@@ -8,7 +8,7 @@ class Ng::V1::Customer::TicketsController < Ng::V1::Customer::BaseController
     @ticket = Ticket.new(ticket_params)
     @ticket.customer = current_customer
     if @ticket.save
-      render json: @ticket, status: :ok
+      render json: @ticket, include: [:agent, :customer, comments: :account], status: :ok
     else
       render json: {
         error_messages: @ticket.errors
@@ -18,14 +18,14 @@ class Ng::V1::Customer::TicketsController < Ng::V1::Customer::BaseController
 
   # DELETE /ng/v1/customer/tickets/1
   def destroy
-    @ticket.destroy
+    @ticket.destroy!
     render json: @ticket, status: :ok
   end
 
   private
 
   def set_ticket
-    @ticket = Ticket.find_by(id: params[:id], customer_id: current_customer.id)
+    @ticket = Ticket.includes(comments: :account).find_by(id: params[:id], customer_id: current_customer.id)
   end
 
   def set_tickets

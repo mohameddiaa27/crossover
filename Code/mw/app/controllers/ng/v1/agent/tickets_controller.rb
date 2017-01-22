@@ -4,30 +4,25 @@ class Ng::V1::Agent::TicketsController < Ng::V1::Agent::BaseController
   include TicketsConcern
 
   # Filters
-  before_action :validate_ownership, only: [:solve]
-
-  def assign
-    if @ticket.assign!(current_agent)
-      render json: @ticket, include: [:agent, :customer, :comments], status: :ok
-    else
-      render json: { error_message: 'Ticket is already Assigned' }, status: :bad_request
-    end
-  end
-
-  def solve
-  end
+  before_action :set_ownership, only: [:update]
 
   private
 
   def set_tickets
-    return @tickets = Ticket.all if params[:filter] == 'all'
+    return @tickets = Ticket.all unless params[:mine] == "true"
     @tickets = Ticket.for_agent(current_agent.id)
   end
 
-  def validate_ownership
-    return if @ticket.agent == current_agent
-    render json: {
-      error_message: 'Packages should be array'
-    }, status: :not_found
+  def set_ownership
+    case @ticket.agent
+    when current_agent
+      return
+    when nil
+      @ticket.agent = current_agent
+    else
+      render json: {
+        error_message: 'Packages should be array'
+      }, status: :not_found
+    end
   end
 end

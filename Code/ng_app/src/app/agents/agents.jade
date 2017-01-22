@@ -1,0 +1,18 @@
+.container
+  .row
+    .span12
+      .widget.stacked.widget-table.action-table
+        .page-header
+          h1
+            | Agents
+        //- .row
+        //-   .col-md-2.col-md-offset-5.pull-right
+        //-     form(action='#', method='get')
+        //-       .input-group
+        //-         input#system-search.form-control(name='q', placeholder='Search for', required='')
+        //-         span.input-group-btn
+        //-           button.btn.btn-default(type='submit', data-original-title='', title='')
+        //-             i.glyphicon.glyphicon-search
+        //- br
+        //- br
+        user-list(index='agents.index')

@@ -1,0 +1,40 @@
+.widget-content
+  table.table.table-striped.table-bordered
+    thead
+      tr
+        th
+          | ID
+        th
+          | Name
+        th
+          | Email
+        th#table_action.td-actions Action
+    tbody
+      tr(ng-repeat='user in us.index.users')
+        td {{user.id}}.
+        td {{user.name}}
+        td {{user.email}}
+        td.td-actions
+          a.btn.btn-default.btn-xs(href='javascript:;')
+            span.glyphicon.glyphicon-pencil
+            |  Edit
+          a.btn.btn-default.btn-xs(href='javascript:;')
+            span.glyphicon.glyphicon-remove
+            |  Remove
+          a.btn.btn-default.btn-xs(href='javascript:;')
+            span.glyphicon.glyphicon-search
+            |  View
+.row(ng-hide='us.index.us.users.length == 0')
+  .col-md-2.col-md-offset-5
+    .row-fluid
+      .page-nation
+        ul.pagination.pagination-large
+          li(ng-class='us.index.meta.prev_page ? "" : "disabled"')
+            a(href='', ng-click='us.paginate("prev_page")') « Back
+          li(ng-class='us.index.meta.next_page ? "" : "disabled"')
+            a(href='', ng-click='us.paginate("next_page")') Next »
+  br
+  .pull-right
+    .row-fluid
+      p(ng-hide='us.index.users.length == 0')
+        | Showing page {{us.index.meta.current_page}} out of {{us.index.meta.total_pages}}

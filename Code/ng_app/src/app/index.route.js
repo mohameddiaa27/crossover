@@ -32,6 +32,24 @@
         controller: 'SessionsController',
         controllerAs: 'sessions'
       })
+      .state('dashboard', {
+        url: '/home',
+        templateUrl: 'app/tickets/tickets.html',
+        controller: 'TicketsController',
+        controllerAs: 'tickets'
+      })
+      .state('agents', {
+        url: '/admin/agents',
+        templateUrl: 'app/agents/agents.html',
+        controller: 'AgentsController',
+        controllerAs: 'agents'
+      })
+      .state('customers', {
+        url: '/admin/customers',
+        templateUrl: 'app/customers/customers.html',
+        controller: 'CustomersController',
+        controllerAs: 'customers'
+      })
       ;
 
     $urlRouterProvider.otherwise('/');

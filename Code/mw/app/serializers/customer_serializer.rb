@@ -1,7 +1,8 @@
 class CustomerSerializer < ActiveModel::Serializer
   # Attributes
-  attributes :id, :name
+  attributes :id, :name, :email, :type
 
-  # Associations
-  has_many :tickets
+  def type
+  	'customer'
+  end
 end

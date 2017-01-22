@@ -7,22 +7,22 @@ Rails.application.routes.draw do
   namespace :ng do
     namespace :v1 do
       namespace :admin do
-        resources :agents
+        resources :agents, only: [:index]
         resources :customers, only: [:index, :destroy]
-        resources :tickets, only: [:index, :create, :destroy, :show] do
-          resources :comments, only: [:index, :destroy]
+        resources :tickets, only: [:index, :create, :destroy, :show, :update] do
+          resources :comments, only: [:index, :destroy, :create]
         end
       end
       namespace :agent do
         resources :tickets, only: [:index, :show, :update] do
           put :assign
           put :solve
-          resources :comments, only: [:index, :destroy]
+          resources :comments, only: [:index, :destroy, :create]
         end
       end
       namespace :customer do
-        resources :tickets, only: [:index, :show, :destroy, :create] do
-          resources :comments, only: [:index, :destroy]
+        resources :tickets, only: [:index, :show, :destroy, :create, :update] do
+          resources :comments, only: [:index, :destroy, :create]
         end
       end
     end

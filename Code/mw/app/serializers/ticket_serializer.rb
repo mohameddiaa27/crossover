@@ -1,10 +1,10 @@
 class TicketSerializer < ActiveModel::Serializer
 
   # Attributes
-  attributes :id, :title, :body
+  attributes :id, :title, :body, :status, :created_at
 
   # Associations
-  has_many :preview_comments, key: :comments
+  has_many :comments
   belongs_to :customer
   belongs_to :agent
 end

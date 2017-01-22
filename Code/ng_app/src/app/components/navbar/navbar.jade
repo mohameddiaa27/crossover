@@ -1,0 +1,17 @@
+nav.navbar.navbar-static-top.navbar-inverse
+  .container-fluid
+    .navbar-header
+      a.navbar-brand(href='#/home')
+        span.glyphicon.glyphicon-home
+        |  Issue Tracker
+    #bs-example-navbar-collapse-6.collapse.navbar-collapse
+      ul.nav.navbar-nav(ng-if='$root.currentUser')
+        li
+          a(href='#/home') Home
+        li(ng-if='$root.currentUser.type === "admin"')
+          a(href='#/admin/agents') Agents
+        li(ng-if='$root.currentUser.type === "admin"')
+          a(href='#/admin/customers') Customers
+      ul.nav.navbar-nav.navbar-right(ng-if='$root.currentUser')
+        li
+          a(ng-href ng-click='vm.handleSignOut()') Logout ({{$root.currentUser.name}})

@@ -1,0 +1,62 @@
+.container
+  .row
+    section.content
+      .col-md-12
+        .panel.panel-default
+          .panel-body
+            .row-fluid
+              .pull-left
+                h1 Tickets
+              .pull-right
+                .btn-group
+                  button.btn.btn-default(ng-click='tickets.filterStatus("all")') All
+                  button.btn.btn-warning(ng-click='tickets.filterStatus("initiated")', ng-if='!tickets.filters.mine') Initiated
+                  button.btn.btn-primary(ng-click='tickets.filterStatus("assigned")') Assigned
+                  button.btn.btn-success(ng-click='tickets.filterStatus("solved")') Solved
+            br
+            br
+            .row-fluid(ng-show='currentUser.type == "agent"')
+              .pull-right
+                .checkbox
+                  label
+                    input(type='checkbox', name='awesome', ng-model='tickets.filters.mine', ng-change="tickets.filterMine()")
+                    | Show only my tickets
+            .table-container(style='margin-top:50px')
+              table.table.table-filter
+                tbody
+                  tr
+                    .col-md-2.col-md-offset-5
+                      h5(ng-show='tickets.index.tickets.length == 0') NO TICKETS
+                  tr(ng-repeat='ticket in tickets.index.tickets', ng-if="tickets.filters.status == 'all' || ticket.status == tickets.filters.status")
+                    td
+                      .media
+                        a.pull-left(href='#')
+                          img.media-photo(src='http://www.toveconsulting.com/images/project_issues.jpg',height="120" width="120")
+                        .media-body
+                          .pull-right
+                              span
+                                small {{ticket.created_at | date:"MM/dd/yyyy 'at' h:mma"}}
+                                label.label(ng-class='{"initiated":"label-warning","assigned":"label-primary","solved": "label-success"}[ticket.status]') {{ticket.status}}
+                          a(href, ng-click="tickets.selectedId = ticket.id")
+                            h4.title
+                              | {{ticket.title}}
+                              span.pull-right.pagado
+                          p.summary {{ticket.body}}
+                      div(ng-if="tickets.selectedId == ticket.id", ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}")
+                        .pull-right
+                          button.btn.btn-default(ng-click='tickets.selectedId=0') Collapse
+                        ticket-show(ticket='ticket', tickets='tickets.index.tickets')
+        div(ng-hide='tickets.index.tickets.length == 0')
+          .col-md-2.col-md-offset-5
+            .row-fluid
+              .page-nation
+                ul.pagination.pagination-large
+                  li(ng-class='tickets.index.meta.prev_page ? "" : "disabled"')
+                    a(href='', ng-click='tickets.paginate("prev_page")') « Back
+                  li(ng-class='tickets.index.meta.next_page ? "" : "disabled"')
+                    a(href='', ng-click='tickets.paginate("next_page")') Next »
+          br
+          .pull-right
+            .row-fluid
+              p(ng-hide='tickets.index.tickets.length == 0')
+                | Showing {{tickets.filters.status }} tickets - page {{tickets.index.meta.current_page}} out of {{tickets.index.meta.total_pages}}

@@ -21,11 +21,16 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController(moment) {
+    function NavbarController(moment, $rootScope, ngTiddleAuthService, toasty) {
       var vm = this;
-
-      // "vm.creationDate" is available by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
+      vm.handleSignOut = function(){
+        ngTiddleAuthService.signOut();
+        $rootScope.endSession();
+        toasty.warning({
+          title: 'Signed Out !!',
+          msg: 'Happy to serve you'
+        });
+      }
     }
   }
 

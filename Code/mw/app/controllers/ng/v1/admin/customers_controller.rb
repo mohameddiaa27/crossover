@@ -3,17 +3,8 @@ class Ng::V1::Admin::CustomersController < Ng::V1::Admin::BaseController
 
   # GET /ng/v1/admin/customers
   def index
-    @customers = Customer.all
-  end
-
-  # GET /ng/v1/admin/customers/1
-  def show
-  end
-
-  # DELETE /ng/v1/admin/customers/1
-  def destroy
-    @customer.destroy
-    redirect_to customers_url, notice: 'Customer was successfully destroyed.'
+    @customers = Customer.page(params[:page]).per(5)
+    render json: { users: @customers, meta: pagination_dict(@customers) }, status: :ok
   end
 
   private
