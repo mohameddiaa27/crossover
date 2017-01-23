@@ -18,6 +18,7 @@ section
             .glyphicon.glyphicon-plus
       .row-fluid(ng-show='currentUser.type == "agent"')
         .pull-right
+          button.btn.btn-danger(ng-click='tickets.exportPdf()') Export Last Month Report
           .checkbox
             label
               input(type='checkbox', name='awesome', ng-model='tickets.filters.mine', ng-change="tickets.filterMine()")

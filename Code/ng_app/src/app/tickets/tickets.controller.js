@@ -6,7 +6,7 @@
 		.controller('TicketsController', TicketsController);
 
 	/** @ngInject */
-	function TicketsController($timeout, toastr, Ticket, ngDialog) {
+	function TicketsController($timeout, toastr, Ticket, ngDialog, pdfMake) {
 		var vm = this
 		vm.filters = {
 			status: 'all'
@@ -41,6 +41,13 @@
 				controller: 'NewTicketController',
 				controllerAs: 'tn',
 				width: '60%'
+			});
+		}
+
+		vm.exportPdf = function(){
+			Ticket.lastMonth().$promise.then(function(ts){
+				var docDefinition = Ticket.exportPdf(ts);
+				pdfMake.createPdf(docDefinition).open();
 			});
 		}
 

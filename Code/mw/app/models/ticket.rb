@@ -19,6 +19,10 @@ class Ticket < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
   scope :for_customer, ->(customer_id) { where(customer_id: customer_id) }
   scope :for_agent, ->(agent_id) { where(agent_id: agent_id) }
+  scope :closed_last_month, -> { where(closed_at: 1.month.ago.utc.beginning_of_month..1.month.ago.utc.end_of_month)}
+
+  # Callbacks
+  before_update :set_closed_at
 
   # Agent Can not be changed
   def verify_admin
@@ -46,5 +50,11 @@ class Ticket < ApplicationRecord
 
   def agent_error
     errors.add(:agent_id, "can't be changed")
+  end
+
+  def set_closed_at
+    if self.status_was == 'assigned' and self.status == 'solved'
+      self.closed_at = Time.now
+    end
   end
 end

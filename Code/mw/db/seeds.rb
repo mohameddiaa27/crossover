@@ -24,7 +24,7 @@ end
 end
 
 ts = []
-20.times do
+40.times do
 	ts << Ticket.create(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph, customer: c)
 end
 
@@ -32,4 +32,12 @@ ts.each do |t|
 	t.agent = ag
 	t.status = "assigned"
 	t.save!
+end
+
+ts[0..20].each do |t|
+	t.status = "solved"
+	t.save!
+	date2 = 1.month.ago.utc.end_of_month
+	date1 = 2.month.ago.utc.beginning_of_month
+	t.update_column(:closed_at, Time.at((date2.to_f - date1.to_f)*rand + date1.to_f))
 end

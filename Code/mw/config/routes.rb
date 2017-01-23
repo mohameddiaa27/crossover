@@ -15,8 +15,7 @@ Rails.application.routes.draw do
       end
       namespace :agent do
         resources :tickets, only: [:index, :show, :update] do
-          put :assign
-          put :solve
+          get :last_month, on: :collection
           resources :comments, only: [:index, :destroy, :create]
         end
       end

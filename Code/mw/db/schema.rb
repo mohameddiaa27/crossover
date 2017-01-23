@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20170117141440) do
     t.integer  "agent_id"
     t.text     "body",        limit: 65535
     t.string   "title"
+    t.datetime "closed_at"
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end

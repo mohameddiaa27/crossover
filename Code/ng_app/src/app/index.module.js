@@ -15,7 +15,8 @@
 			'toastr',
 			'ng-tiddle',
 			'angular-toasty',
-			'ngDialog'
+			'ngDialog',
+			'ng-pdfmake'
 		]);
 
 })();

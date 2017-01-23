@@ -7,8 +7,8 @@ module TicketsConcern
   included do
     before_action :set_tickets, only: [:index]
     before_action :filter_params, only: [:index]
-    before_action :set_ticket, except: [:index]
-    before_action :validate_presence, except: [:index, :create]
+    before_action :set_ticket, except: [:index, :last_month]
+    before_action :validate_presence, except: [:index, :create, :last_month]
   end
 
   # Actions

@@ -6,6 +6,7 @@ class CreateTickets < ActiveRecord::Migration[5.0]
       t.integer :agent_id
       t.text :body
       t.string :title
+      t.datetime :closed_at
 
       t.timestamps
     end

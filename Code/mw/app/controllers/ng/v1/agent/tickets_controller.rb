@@ -6,6 +6,11 @@ class Ng::V1::Agent::TicketsController < Ng::V1::Agent::BaseController
   # Filters
   before_action :set_ownership, only: [:update]
 
+  def last_month
+    @tickets = Ticket.for_agent(current_agent.id).closed_last_month.includes(:agent, :customer)
+    render json: @tickets, include: [:agent, :customer], status: :ok
+  end
+
   private
 
   def set_tickets
