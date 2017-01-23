@@ -1,0 +1,19 @@
+.new-ticket
+  .modal-header
+    h4.modal-title New Agent
+  .modal-body
+    form.form-horizontal(ng-submit='an.create()', role='form')
+      .form-group
+        label.col-sm-2.control-label(for='name') Name
+        .col-sm-10
+          input.form-control(type='text', placeholder='Name', required='required', ng-model='an.agent.name', minlength=5)
+      .form-group
+        label.col-sm-2.control-label(for='email') Email
+        .col-sm-10
+          input.form-control(type='email', placeholder='Email', required='required', ng-model='an.agent.email')
+      .form-group
+        label.col-sm-2.control-label Password
+        .col-sm-10
+          h5 Default Password is 123456
+      .modal-footer
+        button.btn.btn-success(type='submit') Save

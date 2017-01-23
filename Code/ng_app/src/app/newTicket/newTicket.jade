@@ -1,0 +1,18 @@
+//- section
+//-   .panel.panel-default
+//-     .panel-body
+.new-ticket
+  .modal-header
+    h4.modal-title New Ticket
+  .modal-body
+    form.form-horizontal(ng_submit='tn.create()', role='form')
+      .form-group
+        label.col-sm-2.control-label(for='title') Title
+        .col-sm-10
+          input.form-control(type='text', placeholder='Title', required='required' , ng-model='tn.ticket.title', minlength=6)
+      .form-group
+        label.col-sm-2.control-label(for='body') Details
+        .col-sm-10
+          textarea.form-control(type='text', placeholder='Describe youe issue in details', required='required' , rows="8", ng-model='tn.ticket.body', minlength=10)
+      .modal-footer
+        button.btn.btn-success(type='submit') Save

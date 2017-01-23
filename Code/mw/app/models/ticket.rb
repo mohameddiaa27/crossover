@@ -16,6 +16,7 @@ class Ticket < ApplicationRecord
   validate :verify_status
 
   # Scopes
+  default_scope -> { order(created_at: :desc) }
   scope :for_customer, ->(customer_id) { where(customer_id: customer_id) }
   scope :for_agent, ->(agent_id) { where(agent_id: agent_id) }
 

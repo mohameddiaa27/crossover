@@ -9,4 +9,7 @@ class Customer < ApplicationRecord
 
   # Validations
   validates :name, length: { minimum: 5 }
+
+  # Scopes
+  default_scope -> { order(created_at: :desc) }
 end
