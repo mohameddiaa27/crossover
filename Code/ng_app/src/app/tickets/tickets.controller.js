@@ -6,7 +6,7 @@
 		.controller('TicketsController', TicketsController);
 
 	/** @ngInject */
-	function TicketsController($timeout, webDevTec, $state, toastr, $log, Ticket) {
+	function TicketsController($timeout, toastr, Ticket, ngDialog) {
 		var vm = this
 		vm.filters = {
 			status: 'all'
@@ -35,8 +35,13 @@
 			updateTickets();
 		}
 
-		vm.newTicket = function(){
-			$state.go('new');
+		vm.newTicket = function() {
+			ngDialog.open({
+				template: 'app/newTicket/newTicket.html',
+				controller: 'NewTicketController',
+				controllerAs: 'tn',
+				width: '60%'
+			});
 		}
 
 		updateTickets();

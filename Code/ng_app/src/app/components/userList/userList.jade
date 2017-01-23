@@ -15,13 +15,13 @@
         td {{user.name}}
         td {{user.email}}
         td.td-actions
-          button.btn.btn-default.btn-xs
+          button.btn.btn-default.btn-xs(ng-click='us.pendingFeature()')
             span.glyphicon.glyphicon-pencil
             |  Edit
-          button.btn.btn-default.btn-xs
+          button.btn.btn-default.btn-xs(ng-click='us.pendingFeature()')
             span.glyphicon.glyphicon-remove
             |  Remove
-          button.btn.btn-default.btn-xs
+          button.btn.btn-default.btn-xs(ng-click='us.pendingFeature()')
             span.glyphicon.glyphicon-search
             |  View
 .row-fluid(ng-hide='us.index.us.users.length == 0')

@@ -8,12 +8,6 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('home', {
-        url: '/',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainController',
-        controllerAs: 'main'
-      })
       .state('admin_login', {
         url: '/admin/login',
         templateUrl: 'app/sessions/login.html',
@@ -49,12 +43,6 @@
         templateUrl: 'app/customers/customers.html',
         controller: 'CustomersController',
         controllerAs: 'customers'
-      })
-      .state('new', {
-        url: '/new',
-        templateUrl: 'app/new/new.html',
-        controller: 'NewController',
-        controllerAs: 'tn'
       })
       ;
 

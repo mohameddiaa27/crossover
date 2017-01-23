@@ -2,6 +2,8 @@ section
   .panel.panel-default
     .panel-body
       .widget.stacked.widget-table.action-table
+        .pull-right
+          button.btn.btn-danger(ng-click='agents.newAgent()') New Agent
         .page-header
           h1 Agents
         user-list(index='agents.index')

@@ -26,6 +26,12 @@ angular.module('ngApp')
     return {
       index: function(params) {
         return resource().get(params, function() {});
-      }
+      },
+      create: function(customer) {
+        var res = $resource('http://localhost:3000/auth');
+        return res.save({
+          customer: customer
+        }, function() {});
+      },
     };
   });

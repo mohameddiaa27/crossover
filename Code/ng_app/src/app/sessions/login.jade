@@ -1,9 +1,26 @@
-.row
+.row(ng-if='!sessions.newUser')
   .col-md-offset-4.col-md-4
     form.form-horizontal(ng_submit='sessions.handleSignIn(loginForm)', role='form')
       h4 Welcome back. {{sessions.modelName}}
-      input#email.form-control(name='email', ng_model='loginForm.email', required='required', type='email', placeholder='Email', autofocus='autofocus')
-      br
-      input#password.form-control(name='password', ng_model='loginForm.password', required='required', type='password', placeholder='Password')
-      br
-      button.btn.btn-blue(type='submit') Sign in
+      .form-group
+        input.form-control(name='email', ng_model='loginForm.email', required='required', type='email', placeholder='Email', autofocus='autofocus')
+      .form-group
+        input.form-control(name='password', ng_model='loginForm.password', required='required', type='password', placeholder='Password')
+      .form-group
+        a(ng-click='sessions.newUser = true') Don't have an account?
+        .pull-right
+          button.btn.btn-primary(type='submit') Sign in
+.row(ng-if='sessions.newUser')
+  .col-md-offset-4.col-md-4
+    form.form-horizontal(ng_submit='sessions.handleSignUp(signUpForm)', role='form')
+      h4 Sign Up
+      .form-group
+        input.form-control(name='name', ng_model='signUpForm.name', required='required', type='text', placeholder='Name', autofocus='autofocus')
+      .form-group
+        input.form-control(name='email', ng_model='signUpForm.email', required='required', type='email', placeholder='Email', autofocus='autofocus')
+      .form-group
+        input.form-control(name='password', ng_model='signUpForm.password', required='required', type='password', placeholder='Password')
+      .form-group
+        a(ng-click='sessions.newUser = true') Aready have an account?
+        .pull-right
+          button.btn.btn-success(type='submit') Sign up

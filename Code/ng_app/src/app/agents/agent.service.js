@@ -26,6 +26,11 @@ angular.module('ngApp')
     return {
       index: function(params) {
         return resource().get(params, function() {});
-      }
+      },
+      create: function(agent) {
+        return resource().save({
+          agent: agent
+        }, function() {});
+      },
     };
   });

@@ -6,4 +6,7 @@ class Customer < ApplicationRecord
 
   has_many :authentication_tokens, as: :account
   has_many :comments, as: :account
+
+  # Validations
+  validates :name, length: { minimum: 5 }
 end

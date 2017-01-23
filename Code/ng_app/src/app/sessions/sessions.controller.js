@@ -6,7 +6,7 @@
     .controller('SessionsController', SessionsController);
 
   /** @ngInject */
-  function SessionsController($scope, $log, $state, ngTiddleAuthService, ngTiddleAuthProvider, $rootScope) {
+  function SessionsController($scope, $log, $state, ngTiddleAuthService, ngTiddleAuthProvider, $rootScope, Customer, toasty) {
     var vm = this
     vm.modelName = $state.current.name.replace("_login", "");
     vm.handleSignIn = function(loginForm) {
@@ -19,5 +19,24 @@
         password: loginForm.password
       });
     }
+
+    vm.handleSignUp = function(signUpForm) {
+      Customer.create(signUpForm).$promise.then(function(t) {
+        if(t.customer){
+          ngTiddleAuthProvider.setModelName('customer');
+          ngTiddleAuthService.signIn({
+            email: signUpForm.email,
+            password: signUpForm.password
+          });
+        }else{
+          toasty.error({
+            title: 'Failed to Register'
+          });
+        }
+
+      }, function(t) {
+      });
+    }
+
   }
 })();

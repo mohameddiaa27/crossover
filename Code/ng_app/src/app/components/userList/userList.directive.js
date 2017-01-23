@@ -11,7 +11,8 @@
       restrict: 'E',
       templateUrl: 'app/components/userList/userList.html',
       scope: {
-        index: '='
+        index: '=',
+        type: '='
       },
       controller: UserListController,
       controllerAs: 'us',
@@ -20,8 +21,26 @@
     return directive;
 
     /** @ngInject */
-    function UserListController(moment, $rootScope) {
+    function UserListController(moment, $rootScope, toasty, Customer, Agent) {
       var vm = this;
+
+      vm.pendingFeature = function() {
+        toasty.warning({
+          title: 'This Feature',
+          msg: 'is in development phase'
+        });
+      }
+
+      vm.paginate = function(page) {
+        var params = {
+          page: vm.index.meta[page]
+        };
+        if (vm.type == 'customer') {
+          vm.index = Customer.index(params);
+        } else {
+          vm.index = Agent.index(params);
+        }
+      }
     }
   }
 

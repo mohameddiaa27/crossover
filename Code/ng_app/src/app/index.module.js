@@ -14,7 +14,8 @@
 			'ui.bootstrap',
 			'toastr',
 			'ng-tiddle',
-			'angular-toasty'
+			'angular-toasty',
+			'ngDialog'
 		]);
 
 })();

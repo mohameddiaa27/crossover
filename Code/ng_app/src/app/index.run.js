@@ -39,6 +39,13 @@
 
 		ngTiddleAuthProvider.onAuthorize = function(auth_data) {
 			$rootScope.currentUser = ngTiddleSessionService.getResource();
+			if(!$rootScope.currentUser){
+				toasty.error({
+	            title: 'Login Failed',
+	            msg: 'Wrong email or password'
+	      });
+				return false;
+			}
 			$cookies.putObject('type', $rootScope.currentUser.type);
 			$log.info($cookies.getObject('type'));
 			$rootScope.token = auth_data.token
