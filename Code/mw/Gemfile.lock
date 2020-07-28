@@ -72,7 +72,7 @@ GEM
       activesupport (>= 4.1.0)
     hitimes (1.2.4)
     i18n (0.7.0)
-    json (2.0.2)
+    json (2.3.1)
     jsonapi (0.1.1.beta6)
       jsonapi-parser (= 0.1.1.beta3)
       jsonapi-renderer (= 0.1.1.beta1)
